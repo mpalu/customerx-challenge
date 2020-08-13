@@ -54,7 +54,14 @@ async function render() {
       <td>${client.name} ${client.surname}</td>
       <td>${client.mail}</td>
       <td>${client.phone}</td>
-      <td>${client.contact}</td>
+      <td>${contacts
+        .map((contact) => {
+          if (contact.id === parseInt(client.contact)) {
+            return ` ${contact.name} ${contact.surname} <br /> ${contact.mail} <br /> ${contact.phone} <br /> <br /> `;
+          }
+        })
+        .join('')}
+      </td>
     </tr>
     `;
     })
