@@ -4,10 +4,7 @@ import { promises as fs } from 'fs';
 import clientsRouter from './routes/clientsRouter.js';
 import contactsRouter from './routes/contactsRouter.js';
 
-const { readFile, writeFile } = fs;
-
-const clientsFile = './data/clients.json';
-const contactsFile = './data/contacts.json';
+const { readFile, writeFile, mkdir, stat } = fs;
 
 global.readFile = readFile;
 global.writeFile = writeFile;
@@ -17,6 +14,9 @@ const HOST = '0.0.0.0';
 
 global.__dirname = path.resolve(path.dirname(''));
 global.staticPath = __dirname + '/public/';
+
+const clientsFile = __dirname + '/data/clients.json';
+const contactsFile = __dirname + '/data/contacts.json';
 
 const app = express();
 const indexRouter = express.Router();
@@ -42,6 +42,8 @@ const createJson = async () => {
   try {
     await readFile(clientsFile);
   } catch (ex) {
+    await fs.mkdir(__dirname + '/data/');
+
     const initialClientsJson = {
       nextId: 1,
       clients: [],
