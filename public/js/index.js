@@ -54,11 +54,11 @@ async function render() {
       <td>${client.name} ${client.surname}</td>
       <td>${client.mail}</td>
       <td>${client.phone}</td>
-      <td>${contacts
-        .map((contact) => {
-          if (contact.id === parseInt(client.contact)) {
-            return ` ${contact.name} ${contact.surname} <br /> ${contact.mail} <br /> ${contact.phone} <br /> <br /> `;
-          }
+      <td>${client.contact
+        .map((contactId) => {
+          const contact = contacts.find((contact) => contact.id === contactId);
+          if (!contact) return;
+          return ` ${contact.name} ${contact.surname} <br /> ${contact.mail} <br /> ${contact.phone} <br /> <br /> `;
         })
         .join('')}
       </td>

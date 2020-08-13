@@ -1,10 +1,13 @@
 import express from 'express';
 import path from 'path';
 import { promises as fs } from 'fs';
-import clientsRouter from './clientsRouter.js';
-import contactsRouter from './contactsRouter.js';
+import clientsRouter from './routes/clientsRouter.js';
+import contactsRouter from './routes/contactsRouter.js';
 
 const { readFile, writeFile } = fs;
+
+const clientsFile = './data/clients.json';
+const contactsFile = './data/contacts.json';
 
 global.readFile = readFile;
 global.writeFile = writeFile;
@@ -13,7 +16,7 @@ const PORT = 8080;
 const HOST = '0.0.0.0';
 
 global.__dirname = path.resolve(path.dirname(''));
-global.staticPath = __dirname + '/views/';
+global.staticPath = __dirname + '/public/';
 
 const app = express();
 const indexRouter = express.Router();
@@ -37,27 +40,27 @@ app.use('/contacts', contactsRouter);
 
 const createJson = async () => {
   try {
-    await readFile('./clients.json');
+    await readFile(clientsFile);
   } catch (ex) {
     const initialClientsJson = {
       nextId: 1,
       clients: [],
     };
 
-    writeFile('./clients.json', JSON.stringify(initialClientsJson))
+    writeFile(clientsFile, JSON.stringify(initialClientsJson))
       .then(() => console.log('Clients JSON file created'))
       .catch((ex) => console.log(`Error creating Clients JSON file: ${ex}`));
   }
 
   try {
-    await readFile('./contacts.json');
+    await readFile(contactsFile);
   } catch (ex) {
     const initialContactsJson = {
       nextId: 1,
       contacts: [],
     };
 
-    writeFile('./contacts.json', JSON.stringify(initialContactsJson))
+    writeFile(contactsFile, JSON.stringify(initialContactsJson))
       .then(() => console.log('Contacts JSON file created'))
       .catch((ex) => console.log(`Error creating Contatacts JSON file: ${ex}`));
   }

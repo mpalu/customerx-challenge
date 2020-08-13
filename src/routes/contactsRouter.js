@@ -2,6 +2,8 @@ import express from 'express';
 
 const contactsRouter = express.Router();
 
+const file = './data/contacts.json';
+
 contactsRouter.use(express.json());
 
 contactsRouter.get('/', (req, res) => {
@@ -10,7 +12,7 @@ contactsRouter.get('/', (req, res) => {
 
 contactsRouter.get('/all', async (req, res) => {
   try {
-    const data = JSON.parse(await readFile('./contacts.json'));
+    const data = JSON.parse(await readFile(file));
     delete data.nextId;
 
     res.send(data);
@@ -21,7 +23,7 @@ contactsRouter.get('/all', async (req, res) => {
 
 contactsRouter.get('/:id', async (req, res) => {
   try {
-    const data = JSON.parse(await readFile('./contacts.json'));
+    const data = JSON.parse(await readFile(file));
 
     const contact = data.contacts.find(
       (ctt) => ctt.id === parseInt(req.params.id),
@@ -41,7 +43,7 @@ contactsRouter.post('/', async (req, res) => {
       throw new Error('Name, Surname, Mail, Phone are required');
     }
 
-    const data = JSON.parse(await readFile('./contacts.json'));
+    const data = JSON.parse(await readFile(file));
 
     contact = {
       id: data.nextId++,
@@ -52,7 +54,7 @@ contactsRouter.post('/', async (req, res) => {
     };
     data.contacts.push(contact);
 
-    await writeFile('./contacts.json', JSON.stringify(data, null, 2));
+    await writeFile(file, JSON.stringify(data, null, 2));
 
     res.send(contact);
   } catch (ex) {
@@ -62,12 +64,12 @@ contactsRouter.post('/', async (req, res) => {
 
 contactsRouter.delete('/:id', async (req, res) => {
   try {
-    const data = JSON.parse(await readFile('./contacts.json'));
+    const data = JSON.parse(await readFile(file));
     data.contacts = data.contacts.filter(
       (contact) => contact.id !== parseInt(req.params.id),
     );
 
-    await writeFile('./contacts.json', JSON.stringify(data, null, 2));
+    await writeFile(file, JSON.stringify(data, null, 2));
 
     res.end();
   } catch (ex) {
@@ -83,7 +85,7 @@ contactsRouter.put('/', async (req, res) => {
       throw new Error('Name, Surname, Mail, Phone are required');
     }
 
-    const data = JSON.parse(await readFile('./contacts.json'));
+    const data = JSON.parse(await readFile(file));
 
     const index = data.contacts.findIndex(
       (ctt) => ctt.id === parseInt(contact.id),
@@ -95,7 +97,7 @@ contactsRouter.put('/', async (req, res) => {
 
     data.contacts[index] = contact;
 
-    await writeFile('./contacts.json', JSON.stringify(data, null, 2));
+    await writeFile(file, JSON.stringify(data, null, 2));
 
     res.send(data);
   } catch (ex) {

@@ -2,6 +2,8 @@ import express from 'express';
 
 const clientsRouter = express.Router();
 
+const file = './data/clients.json';
+
 clientsRouter.use(express.json());
 
 clientsRouter.get('/', (req, res) => {
@@ -10,7 +12,7 @@ clientsRouter.get('/', (req, res) => {
 
 clientsRouter.get('/all', async (req, res) => {
   try {
-    const data = JSON.parse(await readFile('./clients.json'));
+    const data = JSON.parse(await readFile(file));
     delete data.nextId;
 
     res.send(data);
@@ -21,7 +23,7 @@ clientsRouter.get('/all', async (req, res) => {
 
 clientsRouter.get('/:id', async (req, res) => {
   try {
-    const data = JSON.parse(await readFile('./clients.json'));
+    const data = JSON.parse(await readFile(file));
 
     const client = data.clients.find(
       (cli) => cli.id === parseInt(req.params.id),
@@ -48,7 +50,7 @@ clientsRouter.post('/', async (req, res) => {
       throw new Error('Name, Surname, Mail, Phone, Date, Contact are required');
     }
 
-    const data = JSON.parse(await readFile('./clients.json'));
+    const data = JSON.parse(await readFile(file));
 
     client = {
       id: data.nextId++,
@@ -61,7 +63,7 @@ clientsRouter.post('/', async (req, res) => {
     };
     data.clients.push(client);
 
-    await writeFile('./clients.json', JSON.stringify(data, null, 2));
+    await writeFile(file, JSON.stringify(data, null, 2));
 
     res.send(client);
   } catch (ex) {
@@ -71,12 +73,12 @@ clientsRouter.post('/', async (req, res) => {
 
 clientsRouter.delete('/:id', async (req, res) => {
   try {
-    const data = JSON.parse(await readFile('./clients.json'));
+    const data = JSON.parse(await readFile(file));
     data.clients = data.clients.filter(
       (client) => client.id !== parseInt(req.params.id),
     );
 
-    await writeFile('./clients.json', JSON.stringify(data, null, 2));
+    await writeFile(file, JSON.stringify(data, null, 2));
 
     res.end();
   } catch (ex) {
@@ -99,7 +101,7 @@ clientsRouter.put('/', async (req, res) => {
       throw new Error('Name, Surname, Mail, Phone, Date, Contact are required');
     }
 
-    const data = JSON.parse(await readFile('./clients.json'));
+    const data = JSON.parse(await readFile(file));
 
     const index = data.clients.findIndex(
       (cli) => cli.id === parseInt(client.id),
@@ -111,7 +113,7 @@ clientsRouter.put('/', async (req, res) => {
 
     data.clients[index] = client;
 
-    await writeFile('./clients.json', JSON.stringify(data, null, 2));
+    await writeFile(file, JSON.stringify(data, null, 2));
 
     res.send(data);
   } catch (ex) {
