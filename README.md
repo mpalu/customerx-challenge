@@ -19,7 +19,7 @@ In the future this project will be refactored to implement React and MongoDB, as
 
 ## Running
 
-To run this application follow those steps:
+To run this application follow these steps:
 
 1. Clone the project
    ```
