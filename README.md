@@ -1,37 +1,42 @@
-# Desafio FullStack Jr.
+# CustomerX Challange
 
-Esta aplicação foi desenvolvida como parte do desafio fullstack Jr da CustomerX.
+This project is part of CustomerX challange for Full Stack developer.
 
-As tecnologias utilizadas foram NodeJS com o framework Express, JavaScript ES6, Bootstrap e Docker.
+## Stack
 
-No futuro irei refatorar o projeto utilizando React e MongoDB. Serão também aplicadas máscaras nos formulários e aperfeiçoadas as validações dos dados e apresentação das informações.
+- JavaSctipt ES6
+- Express
+- Bootstrap
+- Docker
 
-# Requisitos
+In the future this project will be refactored to implement React and MongoDB, as well as better data validation.
 
-NodeJS ^13.14, ou Docker v19, que pode ser obtido [aqui](https://docs.docker.com/get-docker/).
+## Requisites
 
-# Execução
+- [Node.js 14](https://nodejs.org/en/download/)
+- [Docker](https://docs.docker.com/get-docker/) (optional)
+- [Docker Compose](https://docs.docker.com/compose/install/) (optional)
 
-A aplicação poderá ser executada seguindo os seguintes passos:
+## Running
 
-1. Clone do projeto
+To run this application follow those steps:
+
+1. Clone the project
    ```
-   git clone https://github.com/mpalu/desafio-fullstack-jr.git && cd desafio-fullstack-jr
+   git clone https://github.com/mpalu/customerx-challange.git && cd customerx-challange
    ```
-1. Instalação das dependências e execução do projeto
+1. Install dependencies and execute the application
+
+   Executing with Docker
+
+   ```
+   docker-compose up
+   ```
+
+   Optionally, execute locally
 
    ```
    npm install && npm start
    ```
 
-   Caso preferir, execute com o Docker
-
-   ```
-   docker build -t desafio-fullstack .
-   ```
-
-   ```
-   docker run -p 8080:8080 -d desafio-fullsatck
-   ```
-
-1. Após isso, a aplicação poderá ser acessada por [http://localhost:8080/](http://localhost:8080/)
+1. After the project set up, it can be accessed by [http://localhost:8080/](http://localhost:8080/)
