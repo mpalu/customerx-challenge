@@ -1,4 +1,4 @@
-# CustomerX Challange
+# CustomerX Project
 
 This project is part of CustomerX challange for Full Stack developer.
 
